@@ -307,7 +307,9 @@ int ecx_init_redundant(ecx_contextt *context, ecx_redportt *redport, const char 
    rval = ecx_setupnic(context->port, if2name, TRUE);
    /* prepare "dummy" BRD tx frame for redundant operation */
    ehp = (ec_etherheadert *)&(context->port->txbuf2);
-   ehp->sa1 = oshw_htons(secMAC[0]);
+   ehp->sa0 = oshw_htons(secMAC[0]);
+   ehp->sa1 = oshw_htons(secMAC[1]);
+   ehp->sa2 = oshw_htons(secMAC[2]);
    zbuf = 0;
    ecx_setupdatagram(context->port, &(context->port->txbuf2), EC_CMD_BRD, 0, 0x0000, 0x0000, 2, &zbuf);
    context->port->txbuflength2 = ETH_HEADERSIZE + EC_HEADERSIZE + EC_WKCSIZE + 2;
