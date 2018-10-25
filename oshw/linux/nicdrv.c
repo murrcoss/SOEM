@@ -316,7 +316,9 @@ int ecx_outframe_red(ecx_portt *port, int idx)
       /* write index to frame */
       datagramP->index = idx;
       /* rewrite MAC source address 1 to secondary */
+      ehp->sa0 = htons(secMAC[0]);
       ehp->sa1 = htons(secMAC[1]);
+      ehp->sa2 = htons(secMAC[2]);
       /* transmit over secondary socket */
       port->redport->rxbufstat[idx] = EC_BUF_TX;
       if (send(port->redport->sockhandle, &(port->txbuf2), port->txbuflength2 , 0) == -1)
